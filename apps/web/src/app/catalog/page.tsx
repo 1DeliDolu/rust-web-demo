@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Product {
     id: string;
@@ -22,6 +23,7 @@ export default function CatalogPage() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         loadCatalogData();
@@ -202,7 +204,8 @@ export default function CatalogPage() {
                                     border: '1px solid #e5e7eb',
                                     borderRadius: '8px',
                                     backgroundColor: 'white',
-                                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+                                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                                    marginBottom: '0.5rem'
                                 }}
                             >
                                 <div style={{ marginBottom: '0.5rem' }}>
@@ -238,18 +241,22 @@ export default function CatalogPage() {
                                     }}>
                                         {product.is_active ? 'Aktif' : 'Pasif'}
                                     </span>
-                                    <button style={{
-                                        backgroundColor: '#3b82f6',
-                                        color: 'white',
-                                        border: 'none',
-                                        padding: '0.5rem 1rem',
-                                        borderRadius: '4px',
-                                        fontSize: '0.875rem',
-                                        cursor: 'pointer'
-                                    }}>
+                                    <button
+                                        style={{
+                                            backgroundColor: '#3b82f6',
+                                            color: 'white',
+                                            border: 'none',
+                                            padding: '0.5rem 1rem',
+                                            borderRadius: '4px',
+                                            fontSize: '0.875rem',
+                                            cursor: 'pointer'
+                                        }}
+                                        onClick={() => router.push(`/catalog/${product.id}`)}
+                                    >
                                         Detay
                                     </button>
                                 </div>
+
                             </div>
                         ))}
                     </div>

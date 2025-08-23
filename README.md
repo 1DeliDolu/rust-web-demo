@@ -331,7 +331,7 @@ async fn main() -> anyhow::Result<()> {
         .with_state(pool)
         .layer(CorsLayer::new().allow_origin(Any).allow_methods(Any).allow_headers(Any));
 
-    let addr = SocketAddr::from(([0,0,0,0], 3000));
+    let addr = SocketAddr::from(([0,0,0,0], 3001));
     tracing::info!("listening on {}", addr);
     axum::Server::bind(&addr).serve(api.into_make_service()).await?;
     Ok(())
@@ -427,7 +427,7 @@ services:
     environment:
       DATABASE_URL: mysql://app:app@db:3306/shop
       JWT_SECRET: devsecret
-    ports: ["3000:3000"]
+    ports: ["3001:3000"]
     depends_on: [db]
   web:
     build: ./apps/web
@@ -952,12 +952,12 @@ services:
       DATABASE_URL: mysql://app:app@db:3306/shop
       JWT_SECRET: devsecret
       RUST_LOG: info
-    ports: ["3000:3000"]
+    ports: ["3001:3000"]
     depends_on: [db]
   web:
     build: ../apps/web
     environment:
-      NEXT_PUBLIC_API: http://localhost:3000
+      NEXT_PUBLIC_API: http://localhost:3001
     ports: ["3001:3000"]
     depends_on: [api]
 volumes:
@@ -990,7 +990,7 @@ migrate:
 3. **Migration**: API konteynerinde `sqlx migrate run`.
 4. API: `cargo run -p shop-api` (veya docker ile otomatik).
 5. Web: `pnpm i && pnpm dev` (veya docker).
-6. `GET http://localhost:3000/api/health` → `ok`.
+6. `GET http://localhost:3001/api/health` → `ok`.
 
 ### 17.16 Sonraki Geliştirme Adımları
 
