@@ -1,6 +1,6 @@
 {
-  "/page": "app/page.js",
-  "/api-test/page": "app/api-test/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/catalog/page": "app/catalog/page.js",
+  "/page": "app/page.js",
   "/cart/page": "app/cart/page.js"
 }

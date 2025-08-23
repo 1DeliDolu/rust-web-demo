@@ -31,21 +31,48 @@ export default function CatalogPage() {
         try {
             setLoading(true);
 
-            // Products fetch
-            const productsResponse = await fetch('http://localhost:3001/api/products');
-            if (productsResponse.ok) {
-                const productsData = await productsResponse.json();
-                setProducts(productsData.items || []);
+            // Products fetch with debug (parse into local arrays before updating state)
+            let productsStatus: { status?: number; text?: string } = {};
+            let fetchedProducts: Product[] = [];
+            try {
+                const productsResponse = await fetch('http://localhost:3001/api/products');
+                productsStatus.status = productsResponse.status;
+                const text = await productsResponse.text();
+                productsStatus.text = text;
+                if (productsResponse.ok) {
+                    const productsData = JSON.parse(text);
+                    fetchedProducts = productsData.items || [];
+                }
+            } catch (e: any) {
+                productsStatus.text = e?.message || String(e);
             }
 
-            // Categories fetch
-            const categoriesResponse = await fetch('http://localhost:3001/api/categories');
-            if (categoriesResponse.ok) {
-                const categoriesData = await categoriesResponse.json();
-                setCategories(categoriesData.items || []);
+            // Categories fetch with debug
+            let categoriesStatus: { status?: number; text?: string } = {};
+            let fetchedCategories: Category[] = [];
+            try {
+                const categoriesResponse = await fetch('http://localhost:3001/api/categories');
+                categoriesStatus.status = categoriesResponse.status;
+                const text = await categoriesResponse.text();
+                categoriesStatus.text = text;
+                if (categoriesResponse.ok) {
+                    const categoriesData = JSON.parse(text);
+                    fetchedCategories = categoriesData.items || [];
+                }
+            } catch (e: any) {
+                categoriesStatus.text = e?.message || String(e);
             }
 
-            setError(null);
+            // Update state once
+            setProducts(fetchedProducts);
+            setCategories(fetchedCategories);
+
+            // If either returned empty, keep a short debug message in error state (non-fatal), otherwise clear error
+            if (fetchedProducts.length === 0 || fetchedCategories.length === 0) {
+                setError(prev => prev || `Debug: products=${productsStatus.status || 'err'}; cat=${categoriesStatus.status || 'err'} -- prodResp=${(productsStatus.text || '').slice(0, 200)} -- catResp=${(categoriesStatus.text || '').slice(0, 200)}`);
+            } else {
+                setError(null);
+            }
         } catch (err) {
             console.error('Catalog data loading error:', err);
             setError('Katalog verileri yüklenirken hata oluştu. API sunucusu çalışıyor mu?');
