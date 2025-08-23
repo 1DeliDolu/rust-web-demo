@@ -1,33 +1,26 @@
 import React from 'react'
 import './globals.css'
+import HeaderWithCart from './HeaderWithCart';
+import RootProvider from '../RootProvider';
 
 export const metadata = {
     title: 'E-Ticaret Platformu',
     description: 'Rust + Next.js ile E-Ticaret',
 }
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="tr">
             <body>
-                <header className="bg-blue-600 text-white p-4">
-                    <nav className="container mx-auto flex justify-between">
-                        <h1 className="text-xl font-bold">E-Ticaret</h1>
-                        <div>
-                            <a href="/" className="mr-4 hover:underline">Ana Sayfa</a>
-                            <a href="/catalog" className="mr-4 hover:underline">Katalog</a>
-                            <a href="/cart" className="mr-4 hover:underline">Sepet</a>
-                        </div>
-                    </nav>
-                </header>
-                <main className="container mx-auto p-4">
-                    {children}
-                </main>
+                <RootProvider>
+                    <HeaderWithCart />
+                    <main className="container mx-auto p-4">
+                        {children}
+                    </main>
+                </RootProvider>
             </body>
         </html>
-    )
+    );
 }
+
+

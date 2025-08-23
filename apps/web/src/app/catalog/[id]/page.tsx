@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCart } from "../../CartContext";
 
 interface Product {
     id: string;
@@ -9,6 +10,7 @@ interface Product {
     name: string;
     description: string;
     is_active: number;
+    quantity?: number;
 }
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
@@ -17,6 +19,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [added, setAdded] = useState(false);
+    const { addToCart } = useCart();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -37,17 +40,13 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
     }, [params.id]);
 
     const handleAddToCart = () => {
-        // Sepete ekleme işlemi (örnek: localStorage)
-        let cart = [];
-        if (typeof window !== "undefined") {
-            cart = JSON.parse(localStorage.getItem("cart") || "[]");
-            cart.push(product);
-            localStorage.setItem("cart", JSON.stringify(cart));
+        if (product) {
+            addToCart({ ...product, quantity: 1 });
+            setAdded(true);
+            setTimeout(() => {
+                router.push("/cart");
+            }, 1000);
         }
-        setAdded(true);
-        setTimeout(() => {
-            router.push("/catalog");
-        }, 1000);
     };
 
     if (loading) return <div style={{ padding: 32 }}>Yükleniyor...</div>;
