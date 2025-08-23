@@ -1,0 +1,12 @@
+/mnt/d/rust-web-demo/apps/api/target/debug/deps/bitflags-b93ecaf248354207.d: /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/lib.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/iter.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/parser.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/traits.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/public.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/internal.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/external.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/external/serde.rs
+
+/mnt/d/rust-web-demo/apps/api/target/debug/deps/libbitflags-b93ecaf248354207.rmeta: /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/lib.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/iter.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/parser.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/traits.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/public.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/internal.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/external.rs /home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/external/serde.rs
+
+/home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/lib.rs:
+/home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/iter.rs:
+/home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/parser.rs:
+/home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/traits.rs:
+/home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/public.rs:
+/home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/internal.rs:
+/home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/external.rs:
+/home/musta/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bitflags-2.9.3/src/external/serde.rs:
