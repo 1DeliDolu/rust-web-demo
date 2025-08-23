@@ -9,8 +9,14 @@ pub enum AppError {
     Sqlx(#[from] sqlx::Error),
     #[error(transparent)]
     Anyhow(#[from] anyhow::Error),
-    #[error(transparent)]
-    ArgonError(#[from] argon2::password_hash::Error),
+    #[error("Password hash error: {0}")]
+    PasswordError(String),
+}
+
+impl From<argon2::password_hash::Error> for AppError {
+    fn from(err: argon2::password_hash::Error) -> Self {
+        AppError::PasswordError(err.to_string())
+    }
 }
 
 impl IntoResponse for AppError {

@@ -1,7 +1,7 @@
 use axum::{routing::get, Router};
-use sqlx::SqlitePool;
+use sqlx::MySqlPool;
 
-pub fn router() -> Router<SqlitePool> { 
+pub fn router() -> Router<MySqlPool> { 
     Router::new().route("/api/health", get(health)) 
 }
 

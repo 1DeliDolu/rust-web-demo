@@ -1,31 +1,49 @@
 use axum::{routing::get, Json, Router, extract::State};
-use sqlx::SqlitePool;
-use serde_json::Value;
+use sqlx::MySqlPool;
+use serde_json::{Value, json};
+use serde::Serialize;
 
-pub fn router() -> Router<SqlitePool> { 
+#[derive(Serialize)]
+struct Product {
+    id: Option<String>,
+    sku: String,
+    name: String,
+    description: Option<String>,
+    is_active: i8,
+}
+
+#[derive(Serialize)]
+struct Category {
+    id: Option<String>,
+    parent_id: Option<String>,
+    slug: String,
+    name: String,
+}
+
+pub fn router() -> Router<MySqlPool> { 
     Router::new()
         .route("/api/products", get(list_products))
         .route("/api/categories", get(list_categories))
 }
 
-async fn list_products(State(pool): State<SqlitePool>) -> Json<Value> {
-    let recs = sqlx::query!(
-        "SELECT id, sku, name, description, is_active FROM products WHERE is_active = 1 LIMIT 50"
+async fn list_products(State(pool): State<MySqlPool>) -> Json<Value> {
+    let recs = sqlx::query_as!(Product,
+        "SELECT BIN_TO_UUID(id) as id, sku, name, description, is_active FROM products WHERE is_active = 1 LIMIT 50"
     )
     .fetch_all(&pool)
     .await
     .unwrap_or_default();
     
-    Json(serde_json::json!({"items": recs}))
+    Json(json!({"items": recs}))
 }
 
-async fn list_categories(State(pool): State<SqlitePool>) -> Json<Value> {
-    let recs = sqlx::query!(
-        "SELECT id, parent_id, slug, name FROM categories ORDER BY name"
+async fn list_categories(State(pool): State<MySqlPool>) -> Json<Value> {
+    let recs = sqlx::query_as!(Category,
+        "SELECT BIN_TO_UUID(id) as id, BIN_TO_UUID(parent_id) as parent_id, slug, name FROM categories ORDER BY name"
     )
     .fetch_all(&pool)
     .await
     .unwrap_or_default();
     
-    Json(serde_json::json!({"items": recs}))
+    Json(json!({"items": recs}))
 }
