@@ -9,7 +9,7 @@ export default function ApiTest() {
     const testHealth = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3000/api/health');
+            const response = await fetch('http://localhost:3001/api/health');
             const data = await response.text();
             setResult(`Health Check: ${data}`);
         } catch (error) {
@@ -21,16 +21,14 @@ export default function ApiTest() {
     const testProducts = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3000/api/products');
+            const response = await fetch('http://localhost:3001/api/products');
             const data = await response.json();
             setResult(`Products: ${JSON.stringify(data, null, 2)}`);
         } catch (error) {
             setResult(`Error: ${error}`);
         }
         setLoading(false);
-    };
-
-    return (
+    }; return (
         <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
             <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '2rem' }}>
                 API Test Sayfası

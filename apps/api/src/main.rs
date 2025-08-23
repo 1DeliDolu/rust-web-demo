@@ -29,7 +29,7 @@ async fn main() -> anyhow::Result<()> {
                 .allow_headers(Any)
         );
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 3001));
     tracing::info!("listening on {}", addr);
     
     let listener = tokio::net::TcpListener::bind(addr).await?;
