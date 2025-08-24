@@ -5,6 +5,10 @@ use thiserror::Error;
 pub enum AppError {
     #[error("Not found")]
     NotFound,
+    #[error("Unauthorized")]
+    Unauthorized,
+    #[error("Forbidden")]
+    Forbidden,
     #[error(transparent)]
     Sqlx(#[from] sqlx::Error),
     #[error(transparent)]
@@ -23,6 +27,8 @@ impl IntoResponse for AppError {
     fn into_response(self) -> Response {
         let code = match self { 
             AppError::NotFound => StatusCode::NOT_FOUND, 
+            AppError::Unauthorized => StatusCode::UNAUTHORIZED,
+            AppError::Forbidden => StatusCode::FORBIDDEN,
             _ => StatusCode::INTERNAL_SERVER_ERROR 
         };
         (code, self.to_string()).into_response()

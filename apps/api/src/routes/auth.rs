@@ -37,11 +37,36 @@ pub struct UserInfo {
 }
 
 pub fn router() -> Router<MySqlPool> { 
+    use axum::routing::get;
+
     Router::new()
         .route("/api/auth/register", post(register))
         .route("/api/auth/login", post(login))
+        .route("/api/auth/users", get(list_users))
 }
 
+use crate::domain::rbac::{Auth, require_role};
+
+async fn list_users(
+    State(pool): State<MySqlPool>,
+    auth: Auth,
+) -> Result<Json<Vec<UserInfo>>, AppError> {
+    if let Err(_) = require_role(&auth, &["admin"]) {
+        return Err(AppError::Forbidden);
+    }
+    let users = sqlx::query!(
+        "SELECT BIN_TO_UUID(id) as id, email, name, role FROM users"
+    )
+    .fetch_all(&pool)
+    .await?;
+    let result = users.into_iter().map(|u| UserInfo {
+        id: Uuid::parse_str(&u.id.unwrap()).unwrap(),
+        email: u.email,
+        name: u.name,
+        role: u.role,
+    }).collect();
+    Ok(Json(result))
+}
 async fn register(
     State(pool): State<MySqlPool>, 
     Json(inp): Json<RegisterInput>
